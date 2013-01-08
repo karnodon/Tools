@@ -1,4 +1,6 @@
 # coding=utf-8
+from datetime import datetime
+
 __author__ = 'Frostbite'
 import re
 import os
@@ -39,8 +41,7 @@ def print_html(tgt, html_file):
                 pass
         try:
             for i in range(2, len(tgt)):
-                sub_lst = tgt[i]
-                print_html(sub_lst, html_file)
+                print_html(tgt[i], html_file)
         except IndexError:
             pass
         html_file.write(u'</ul>'.encode('utf8'))
@@ -54,6 +55,7 @@ def main():
         global show_files
         show_files = True
         arg_idx = 2
+    start = datetime.now()
     walk(unicode(sys.argv[arg_idx]), main_list)
     f = open(sys.argv[arg_idx + 1], 'w')
     f.write(u'<html><body><ul>'.encode('utf8'))
@@ -61,5 +63,5 @@ def main():
     f.write((u'</ul><ul><li>всего альбомов: ' + unicode(total_albums) + u'</li>').encode('utf8'))
     f.write((u'<li>всего записей: ' + unicode(total_files) + u'</li></ul>').encode('utf8'))
     f.write(u'</body></html>'.encode('utf8'))
-
+    print 'Выполнено за ' + str(datetime.now() - start)
 main()
